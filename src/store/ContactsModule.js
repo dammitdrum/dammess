@@ -16,7 +16,7 @@ const ContactsModule = {
   },
   actions: {
     loadContacts ({ commit, getters }) {
-      return requestService.get('/api/user/me')
+      return requestService.get('/api/user/contacts')
         .then(contacts => {
           commit('setContacts', contacts)
         })

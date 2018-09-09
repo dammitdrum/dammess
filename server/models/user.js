@@ -57,4 +57,11 @@ const userSchema = new Schema({
   ]
 });
 
+userSchema.post('findOne', function(result) {
+  // this => mongoose.Query
+
+
+  console.log('find() took ' + (Date.now() - this.start) + ' millis');
+});
+
 module.exports = mongoose.model('User', userSchema);

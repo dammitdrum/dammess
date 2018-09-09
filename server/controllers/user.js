@@ -10,13 +10,16 @@ module.exports = {
         return res.status(400).json(error);
       }
       const encryptedPass = userService.encryptPassword(value.password);
+      const avatar = userService.createAvatar(value.email);
 
       const user = await User.create({
         email: value.email,
         name: value.name,
         password: encryptedPass,
+        avatar
       });
-      return res.json({ success: true });
+      const token = jwt.issue({ id: user._id }, '1d');
+      return res.json({ token, user });
     } catch (err) {
       console.error(err);
       return res.status(500).send(err);
@@ -30,14 +33,24 @@ module.exports = {
       }
       const user = await User.findOne({ email: value.email });
       if (!user) {
-        return res.status(401).json({ err: 'unauthorized' });
+        return res.status(401).json({ name: 'Wrong email or password!' });
       }
       const authenticted = userService.comparePassword(value.password, user.password);
       if (!authenticted) {
         return res.status(401).json({ err: 'unauthorized' });
       }
       const token = jwt.issue({ id: user._id }, '1d');
-      return res.json({ token });
+      return res.json({ token, user });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+  },
+  async contacts(req, res) {
+    try {
+      const contacts = await User.findContacts({});
+
+      return res.json(contacts);
     } catch (err) {
       console.error(err);
       return res.status(500).send(err);

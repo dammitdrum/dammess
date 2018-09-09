@@ -50,7 +50,7 @@ import moment from 'moment'
 export default {
   name: 'ChatsList',
   created () {
-    this.$store.dispatch('loadChats')
+    // this.$store.dispatch('loadChats')
   },
   computed: {
     chats () {

@@ -1,22 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import AuthModule from './AuthModule'
+import UserModule from './UserModule'
 import ChatsModule from './ChatsModule'
-import ContactsModule from './ContanctsModule'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules: {
-    auth: AuthModule,
-    chats: ChatsModule,
-    contacts: ContactsModule
+    user: UserModule,
+    chats: ChatsModule
   },
   state: {
+    loading: false,
+    error: null,
     sidebarToggle: true
   },
   getters: {
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
+    },
     sidebarToggle (state) {
       return state.sidebarToggle
     }
@@ -24,6 +30,15 @@ export const store = new Vuex.Store({
   mutations: {
     toggleSidebar (state) {
       state.sidebarToggle = !state.sidebarToggle
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
     }
   },
   actions: {

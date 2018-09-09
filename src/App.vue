@@ -1,19 +1,35 @@
 <template>
   <v-app>
-    <main>
       <router-view></router-view>
-    </main>
   </v-app>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    drawer: null,
-    text: 'tab content'
-  }),
-  props: {
-    source: String
+  created () {
+    this.setAuthHeader()
+  },
+  computed: {
+    isAuth () {
+      return this.$store.getters.isAuth
+    }
+  },
+  watch: {
+    isAuth (value) {
+      let route = value ? '/' : '/login'
+
+      this.setAuthHeader()
+      this.$router.push(route)
+    }
+  },
+  methods: {
+    setAuthHeader () {
+      let token = window.localStorage.getItem('jwt_token')
+
+      if (token) {
+        this.$http.headers.common['Authorization'] = `Bearer ${token}`
+      }
+    }
   }
 }
 </script>

@@ -40,4 +40,7 @@ module.exports = {
 
     return { value };
   },
+  createAvatar(id) {
+    return `https://api.adorable.io/avatars/50/${id}`
+  }
 };

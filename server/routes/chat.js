@@ -8,11 +8,11 @@ const chatRouter = express.Router();
 const policy = [passport.authenticate('jwt', { session: false }), checkMiddleware];
 
 chatRouter.route('/')
-  .get(checkMiddleware, chatController.findAll)
-  .post(checkMiddleware, chatController.create);
+  .get(passport.authenticate('jwt', { session: false }), chatController.findAll)
+  .post(passport.authenticate('jwt', { session: false }), chatController.create);
 
 chatRouter.route('/:id')
-  .put(checkMiddleware, chatController.update)
-  .delete(checkMiddleware, chatController.delete);
+  .put(passport.authenticate('jwt', { session: false }), chatController.update)
+  .delete(passport.authenticate('jwt', { session: false }), chatController.delete);
 
 module.exports = chatRouter;

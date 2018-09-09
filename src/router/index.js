@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Auth from '@/components/User/Auth'
+import Signin from '@/components/User/Singin'
+import Signup from '@/components/User/Singup'
 import AuthGuard from './auth-guard'
 
 Vue.use(Router)
@@ -14,9 +17,21 @@ export default new Router({
       beforeEnter: AuthGuard
     },
     {
+      path: '/auth',
+      name: 'Auth',
+      component: Auth
+    },
+    {
       path: '/login',
       name: 'Signin',
-      component: Home
+      component: Signin,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/registration',
+      name: 'Signup',
+      component: Signup,
+      beforeEnter: AuthGuard
     }
   ],
   mode: 'history'

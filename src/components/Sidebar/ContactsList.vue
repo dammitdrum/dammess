@@ -24,9 +24,6 @@
 <script>
 export default {
   name: 'ContactsList',
-  created () {
-    this.$store.dispatch('loadContacts')
-  },
   computed: {
     contacts () {
       return this.$store.getters.contacts
