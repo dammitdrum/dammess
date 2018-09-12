@@ -5,13 +5,13 @@ export default (to, from, next) => {
     if (!store.getters.isAuth) {
       next()
     } else {
-      next('/auth')
+      next('/')
     }
     return
   }
   if (store.getters.isAuth) {
     next()
   } else {
-    next('/auth')
+    next('/login')
   }
 }

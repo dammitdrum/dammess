@@ -16,10 +16,10 @@
             </v-toolbar>
             <app-alert v-if="error" @dismissed="onDismissed" :text="error.name"></app-alert>
             <v-card-text>
-              <v-form @submit.prevent="onSignup">
+              <v-form>
                 <v-text-field
                   id="email"
-                  prepend-icon="person"
+                  prepend-icon="email"
                   name="email"
                   label="Email"
                   type="text"
@@ -44,6 +44,7 @@
                 <v-text-field
                   name="confirmPassword"
                   label="Confirm Password"
+                  prepend-icon="lock"
                   id="confirmPassword"
                   v-model="confirmPassword"
                   type="password"
@@ -52,7 +53,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn type="submit" :loading="loading">Register</v-btn>
+              <v-btn color="primary" @click="onSignup" :loading="loading">Register</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -86,8 +87,8 @@ export default {
     onSignup () {
       this.$store.dispatch('signUserUp', {
         email: this.email,
-        password: this.password,
-        username: this.username
+        name: this.username,
+        password: this.password
       })
     },
     toLogin () {

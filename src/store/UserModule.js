@@ -1,33 +1,25 @@
-import requestService from '../services/httpRequest'
+import axios from 'axios'
 
 const UserModule = {
   state: {
     user: null,
-    isAuth: false
+    isAuth: null
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
     },
     setAuth (state, payload) {
-      if (payload) {
-        state.isAuth = true
-        if (payload.token) {
-          window.localStorage.setItem('jwt_token', payload.token)
-        }
-      } else {
-        state.isAuth = false
-        window.localStorage.removeItem('jwt_token')
-      }
+      state.isAuth = payload
     }
   },
   actions: {
     authUser ({commit}) {
       commit('setLoading', true)
-      return requestService.get('/api/user/me')
-        .then(user => {
+      return axios.get('/api/user/me')
+        .then(response => {
           commit('setLoading', false)
-          commit('setUser', user)
+          commit('setUser', response.data)
           commit('setAuth', true)
         })
         .catch(error => {
@@ -38,11 +30,11 @@ const UserModule = {
     signUserIn ({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')
-      requestService.post('/api/user/login', payload)
-        .then(data => {
+      axios.post('/api/user/login', payload)
+        .then(response => {
           commit('setLoading', false)
-          commit('setUser', data.user)
-          commit('setAuth', data)
+          commit('setUser', response.data.user)
+          commit('setAuth', response.data)
         })
         .catch(error => {
           commit('setLoading', false)
@@ -53,11 +45,11 @@ const UserModule = {
     signUserUp ({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')
-      requestService.post('/api/user/singup', payload)
-        .then(data => {
+      axios.post('/api/user/singup', payload)
+        .then(response => {
           commit('setLoading', false)
-          commit('setUser', data.user)
-          commit('setAuth', data)
+          commit('setUser', response.data.user)
+          commit('setAuth', response.data)
         })
         .catch(error => {
           commit('setLoading', false)

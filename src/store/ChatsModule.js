@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import requestService from '../services/httpRequest'
+import axios from 'axios'
 
 const ChatsModule = {
   state: {
@@ -32,9 +32,9 @@ const ChatsModule = {
   },
   actions: {
     loadChats ({ commit, getters }) {
-      return requestService.get('/api/chats')
-        .then(chats => {
-          commit('setChats', chats)
+      return axios.get('/api/chats')
+        .then(response => {
+          commit('setChats', response.data)
         })
         .catch(error => {
           console.log(error)
