@@ -3,7 +3,10 @@
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12">
+          <div v-if="loading" class="text-xs-center">
+            <v-progress-circular :size="70" :width="7" color="red" indeterminate></v-progress-circular>
+          </div>
+          <v-card v-else class="elevation-12">
             <v-toolbar dark color="primary">
               <v-toolbar-title>Login form</v-toolbar-title>
               <v-spacer></v-spacer>
@@ -37,7 +40,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="onSignin" :loading="loading">Login</v-btn>
+              <v-btn color="primary" @click="onSignin">Login</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
